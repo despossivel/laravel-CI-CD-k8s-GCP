@@ -2,3 +2,23 @@ steps:
   - id: 'Rodando docker-compose'
     name: 'gcr.io/$PROJECT_ID/docker-compose'
     args: ['-f','docker-compose.cloudbuild.yml','up','-d']
+
+  - id: 'Rodando docker ps'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['ps']
+
+  - id: 'Rodando compose'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec','-t','app', 'compose', 'install']
+
+  - id: 'Copiando .env'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec','-t','app', 'cp', '.env.example', '.env']
+
+  - id: 'Rodando key:generate'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec','-t','app', 'php', '/var/www/artisan', 'key:generate']
+
+  - id: 'Rodando phpunit'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec','-t','app', 'php', '/var/www/vendor/bin/phpunit', '-c', '/var/www/phpunit.xml']
