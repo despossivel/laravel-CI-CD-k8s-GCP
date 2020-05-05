@@ -14,7 +14,7 @@ RUN rm -rf /var/www/html
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN chown -R 777 /var/www/storage
+# RUN chown -R 777 /var/www/storage
 # RUN composer install && \
 #     cp .env.example .env && \
 #     php artisan key:generate && \
