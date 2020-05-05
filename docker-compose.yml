@@ -9,10 +9,10 @@ services:
             - .:/var/www
         networks: 
             - app-network
-        depends_on: 
-            # nginx:
-             - db
-             - redis
+        # depends_on: 
+        #     # nginx:
+        #      - db
+        #      - redis
         environment: 
             - DB_HOST=db
             - DB_DATABASE=laravel
@@ -27,50 +27,50 @@ services:
         #     timeout: 10s
         #     retries: 3
 
-    nginx:
-        build: .docker/nginx
-        container_name: nginx
-        restart: always
-        tty: true
-        ports: 
-            - "8000:80" #porta do meu computador : porta do container
-        volumes:
-            - .:/var/www # minha pasta local : pasta no container
-        networks: 
-            - app-network
-        depends_on: 
-            - app
-                # condition: service_healthy 
+    # nginx:
+    #     build: .docker/nginx
+    #     container_name: nginx
+    #     restart: always
+    #     tty: true
+    #     ports: 
+    #         - "8000:80" #porta do meu computador : porta do container
+    #     volumes:
+    #         - .:/var/www # minha pasta local : pasta no container
+    #     networks: 
+    #         - app-network
+    #     depends_on: 
+    #         - app
+    #             # condition: service_healthy 
             
 
-    db:
-        image: mysql:5.7
-        command:  --innodb-use-native-aio=0
-        container_name: db
-        restart: always
-        tty: true
-        ports: 
-            - "33006:3306"
-        volumes: 
-            - ./.docker/dbdata:/var/lib/mysql
-        environment: 
-            - MYSQL_DATABASE=laravel
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_USER=root
-        networks: 
-            - app-network
-        # healthcheck:
-        #     test: ["CMD-SHELL", 'mysql -uroot --database=laravel --password=root --execute="SELECT count(table_name) > 0 FROM information_schema.tables;"  --skip-column-names -B ']
-        #     interval: 10s
-        #     timeout: 10s
-        #     retries: 4
+    # db:
+    #     image: mysql:5.7
+    #     command:  --innodb-use-native-aio=0
+    #     container_name: db
+    #     restart: always
+    #     tty: true
+    #     ports: 
+    #         - "33006:3306"
+    #     volumes: 
+    #         - ./.docker/dbdata:/var/lib/mysql
+    #     environment: 
+    #         - MYSQL_DATABASE=laravel
+    #         - MYSQL_ROOT_PASSWORD=root
+    #         - MYSQL_USER=root
+    #     networks: 
+    #         - app-network
+    #     # healthcheck:
+    #     #     test: ["CMD-SHELL", 'mysql -uroot --database=laravel --password=root --execute="SELECT count(table_name) > 0 FROM information_schema.tables;"  --skip-column-names -B ']
+    #     #     interval: 10s
+    #     #     timeout: 10s
+    #     #     retries: 4
 
-    redis:
-        image: redis:alpine
-        expose: 
-            - 6379
-        networks: 
-            - app-network
+    # redis:
+    #     image: redis:alpine
+    #     expose: 
+    #         - 6379
+    #     networks: 
+    #         - app-network
 
 networks:
     app-network:
