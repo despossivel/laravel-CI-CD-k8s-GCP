@@ -43,7 +43,6 @@ services:
             - app
                 # condition: service_healthy 
             
-
     db:
         image: mysql:5.7
         command:  --innodb-use-native-aio=0
@@ -72,8 +71,6 @@ services:
             - 6379
         networks: 
             - app-network
-
-    
 
 networks:
     app-network:
