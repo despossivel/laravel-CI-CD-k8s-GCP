@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-conf
+data:
+  env: |
+NGINX_HOST=app
+NGINX_PORT=9000
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+LOG_CHANNEL=stack
+DB_CONNECTION=mysql-service
+DB_HOST=db
+DB_PORT=33006
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=root
+REDIS_HOST=redis-service
+REDIS_PASSWORD=null
+REDIS_PORT=6379
