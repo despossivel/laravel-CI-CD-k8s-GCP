@@ -27,11 +27,38 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA', '-f', 'Dockerfile.prod', '.']
 
-  - id: "Pushing image"
+
+  
+
+  - id: "Deployment Mysql"
+    name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'k8s/mysql/'] #deployment-new.yaml
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+
+  - id: "Deployment Nginx"
+    name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'k8s/nginx/'] #deployment-new.yaml
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+
+  - id: "Deployment Redis"
+    name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'k8s/redis/'] #deployment-new.yaml
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+
+      
+
+
+  - id: "Pushing image APP"
     name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA']
   
-  - id: "Adjustin deployment file - k8s"
+  - id: "Adjustin deployment app file - k8s"
     name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: '/bin/sh'
     args:
@@ -39,10 +66,11 @@ steps:
       - |
         sed 's#img-app-deployment#gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA#g' k8s/app/deployment.yaml > k8s/app/deployment-new.yaml;
         cat k8s/app/deployment-new.yaml;
-  
-  - id: "Deployment"
+
+  - id: "Deployment APP"
     name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', 'k8s/app/deployment-new.yaml']
+    args: ['apply', '-f', 'k8s/app/'] #deployment-new.yaml
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+
