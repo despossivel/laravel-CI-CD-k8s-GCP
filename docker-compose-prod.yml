@@ -4,7 +4,8 @@ services:
     app:
         build: .
         container_name: app
-        entrypoint: dockerize -wait tcp://db:3306 -timeout 60s php-fpm
+        #-template ./.docker/app/.env:.env
+        entrypoint: dockerize -template ./.docker/app/.env:.env -wait tcp://db:3306 -timeout 120s php-fpm
         volumes:
             - .:/var/www
         networks: 
@@ -18,11 +19,21 @@ services:
             - DB_DATABASE=laravel
             - DB_USERNAME=root
             - DB_PASSWORD=root
+      
             
+            
+        # ports: 
+        #     - "80:8000"
+        # healthcheck:
+        #     test: ["CMD-SHELL", "pwd"]
+        #     internal: 10s
+        #     timeout: 10s
+        #     retries: 3
 
     nginx:
         build: .docker/nginx
         container_name: nginx
+        entrypoint: dockerize -template ./.docker/nginx/nginx.template:nginx.conf nginx -g 'daemon off;'
         restart: always
         tty: true
         ports: 
@@ -33,9 +44,11 @@ services:
             - app-network
         depends_on: 
             - app
+        environment: 
+            - NGINX_HOST=app
+            - NGINX_PORT=9000
                 # condition: service_healthy 
             
-
     db:
         image: mysql:5.7
         command:  --innodb-use-native-aio=0
@@ -64,8 +77,6 @@ services:
             - 6379
         networks: 
             - app-network
-
-    
 
 networks:
     app-network:
