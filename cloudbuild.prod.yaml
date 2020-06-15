@@ -29,7 +29,7 @@ steps:
 
 
   
-    - id: "Pushing image APP"
+  - id: "Pushing image APP"
     name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA']
   
@@ -49,7 +49,7 @@ steps:
       - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
 
-      
+
 
   - id: "Deployment Mysql"
     name: 'gcr.io/cloud-builders/kubectl'
