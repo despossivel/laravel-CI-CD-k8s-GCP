@@ -41,6 +41,8 @@ steps:
       - |
         sed 's#img-app-deployment#gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA#g' k8s/app/deployment.yaml > k8s/app/deployment-new.yaml;
         cat k8s/app/deployment-new.yaml;
+        cat .env
+
 
   - id: "Deployment APP"
     name: 'gcr.io/cloud-builders/kubectl'
@@ -50,7 +52,7 @@ steps:
       - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
 
 
-
+      
   - id: "Deployment Mysql"
     name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'k8s/mysql/'] #deployment-new.yaml
