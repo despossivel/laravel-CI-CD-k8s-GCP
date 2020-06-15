@@ -27,19 +27,19 @@ spec:
               name: mysql-pass
               key: password
 
-        envFrom: 
-        - configMapRef:
-            name: app-conf
+        # envFrom: 
+        # - configMapRef:
+        #     name: app-conf
 
-        volumeMounts:
-        - name: app-conf
-          mountPath: /var/www/.env
-          subPath: .env
+        # volumeMounts:
+        # - name: app-conf
+        #   mountPath: /var/www/.env
+        #   subPath: .env
 
-      volumes:
-      - name: app-conf
-        configMap: 
-          name: app-conf
-          items: 
-            - key: env
-              path: .env
+      # volumes:
+      # - name: app-conf
+      #   configMap: 
+      #     name: app-conf
+      #     items: 
+      #       - key: env
+      #         path: .env
