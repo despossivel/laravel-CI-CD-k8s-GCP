@@ -4,10 +4,13 @@ RUN apk add --no-cache openssl bash mysql-client nodejs npm
 RUN docker-php-ext-install pdo pdo_mysql
 
 
+RUN rm -rf /usr/share/nginx/html
+
+RUN mkdir /usr/share/nginx/html
+
 # ln -s /usr/share/nginx /usr/share/nginx; 
 WORKDIR /usr/share/nginx/html
 
-# RUN rm -rf /usr/share/nginx/html
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
