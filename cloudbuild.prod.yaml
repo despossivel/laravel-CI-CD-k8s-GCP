@@ -43,13 +43,15 @@ steps:
         cat k8s/app/deployment-new.yaml;
         cat .env
 
-
+        
   - id: "Deployment APP"
     name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'k8s/app/'] #deployment-new.yaml
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+
+
 
   - id: "Deployment Mysql"
     name: 'gcr.io/cloud-builders/kubectl'

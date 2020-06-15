@@ -4,36 +4,32 @@ RUN apk add --no-cache openssl bash mysql-client nodejs npm
 RUN docker-php-ext-install pdo pdo_mysql
 
 
-RUN rm -rf /usr/share/nginx/html
+WORKDIR /var/www
 
-RUN mkdir /usr/share/nginx/html
-
-# ln -s /usr/share/nginx /usr/share/nginx; 
-WORKDIR /usr/share/nginx/html
-
+RUN rm -rf /var/www/html
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY . /usr/share/nginx/html
+COPY . /var/www
 
 RUN composer install \
     && php artisan config:cache \
-    && chown -R 777 /usr/share/nginx/storage 
+    && chown -R 777 /var/www/storage 
 
 RUN npm install
 
-# RUN ln -s public html
+RUN ln -s public html
 
 FROM php:7.3.6-fpm-alpine3.9
 
 RUN apk add --no-cache mysql-client
 RUN docker-php-ext-install pdo pdo_mysql
 
-# WORKDIR /usr/share/nginx
+WORKDIR /var/www
 
-# RUN rm -rf /usr/share/nginx/html
+RUN rm -rf /var/www/html
 
-# COPY --from=builder /usr/share/nginx .
+COPY --from=builder /var/www .
 
 EXPOSE 9000
 
