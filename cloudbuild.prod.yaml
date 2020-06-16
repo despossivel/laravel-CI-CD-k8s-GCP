@@ -50,7 +50,7 @@ steps:
     args: ['apply', '-f', 'k8s/app/'] #deployment-new.yaml
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-sirflor-mapas'
 
 
 
@@ -59,21 +59,21 @@ steps:
     args: ['apply', '-f', 'k8s/mysql/'] #deployment-new.yaml
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-sirflor-mapas'
 
   - id: "Deployment Nginx"
     name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'k8s/nginx/'] #deployment-new.yaml
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-sirflor-mapas'
 
   - id: "Deployment Redis"
     name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'k8s/redis/'] #deployment-new.yaml
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-sirflor-mapas'
 
       
 
