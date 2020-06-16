@@ -18,7 +18,7 @@ spec:
         image: img-app-deployment
         command: ["/bin/sh", "-c", "ln -s /var/www /usr/share/nginx/html; /var/www/k8s/entrypoint.sh; php-fpm;"]
         ports:
-        - containerPort: 80
+        - containerPort: 9000
 
         env:
         - name: DB_PASSWORD
