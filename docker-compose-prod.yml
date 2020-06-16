@@ -2,7 +2,9 @@ version: '3'
 
 services:
     app:
-        build: .
+        build: 
+            context: .
+            dockerfile: Dockerfile.prod
         container_name: app
         #-template ./.docker/app/.env:.env
         entrypoint: dockerize -template ./.docker/app/.env:.env -wait tcp://db:3306 -timeout 120s php-fpm
