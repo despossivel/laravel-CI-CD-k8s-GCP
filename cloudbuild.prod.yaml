@@ -40,18 +40,21 @@ steps:
       - '-c'
       - |
         sed 's#img-app-deployment#gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA#g' k8s/app/deployment.yaml > k8s/app/deployment-new.yaml;
-        rm -rf k8s/app/deployment.yaml 
-        cat k8s/app/deployment-new.yaml;
-        cat .env
-
+      
         
   - id: "Deployment APP"
     name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', 'k8s/app/'] #deployment-new.yaml
+    args: ['apply', '-f', 'k8s/app/deployment-new.yaml'] #deployment-new.yaml
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-sirflor-mapas'
 
+  - id: "Service APP"
+    name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'k8s/app/service.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-sirflor-mapas'
 
 
   - id: "Deployment Mysql"

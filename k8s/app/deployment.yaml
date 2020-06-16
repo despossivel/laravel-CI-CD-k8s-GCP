@@ -15,6 +15,7 @@ spec:
     spec: 
       containers:
       - name: app
+        #gcr.io/testes-desenvolvimento-260917/app-laravel@sha256:6c5ba12f881a2dd8397b6e96531c2286af20effbb84dae1d9ecddeed722cced5
         image: img-app-deployment
         command: ["/bin/sh", "-c", "ln -s /var/www /usr/share/nginx/html; /var/www/k8s/entrypoint.sh; php-fpm;"]
         ports:
